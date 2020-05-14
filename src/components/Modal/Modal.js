@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import styles from './Modal.module.css';
 
 export default class Modal extends Component {
   static propTypes = {
@@ -19,8 +20,8 @@ export default class Modal extends Component {
     const { link, onClick } = this.props;
 
     return (
-      <div className="Overlay" onClick={onClick}>
-        <div className="Modal">
+      <div className={styles.Overlay} onClick={onClick}>
+        <div className={styles.Modal}>
           <img src={link} alt="" />
         </div>
       </div>

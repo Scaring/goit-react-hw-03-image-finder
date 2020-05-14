@@ -5,6 +5,7 @@ import Loader from './Loader/Loader';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import * as imagesAPI from '../services/image-api';
+import styles from './App.module.css';
 
 const mapper = images => {
   return images.map(
@@ -85,11 +86,11 @@ export default class App extends Component {
           onChange={this.handleChange}
           onSearch={this.handleSearch}
         />
-
-        {images.length > 0 && (
-          <ImageGallery images={images} onClick={this.handleOpenModal} />
-        )}
-
+        <div className={styles.App}>
+          {images.length > 0 && (
+            <ImageGallery images={images} onClick={this.handleOpenModal} />
+          )}
+        </div>
         {isLoading ? (
           <Loader />
         ) : (

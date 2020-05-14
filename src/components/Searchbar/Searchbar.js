@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './Searchbar.module.css';
 
 const Searchbar = ({ query, onChange, onSearch }) => {
   return (
-    <header className="Searchbar">
-      <form className="SearchForm">
-        <button type="submit" className="SearchForm-button" onClick={onSearch}>
-          <span className="SearchForm-button-label">Search</span>
+    <header className={styles.Searchbar}>
+      <form className={styles.SearchForm}>
+        <button
+          type="submit"
+          className={styles.SearchFormButton}
+          onClick={onSearch}
+        >
+          <span className={styles.SearchFormButtonLabel}>Search</span>
         </button>
 
         <input
-          className="SearchForm-input"
+          className={styles.SearchFormInput}
           type="text"
           autoComplete="off"
           autoFocus
