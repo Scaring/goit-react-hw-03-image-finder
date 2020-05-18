@@ -8,13 +8,17 @@ export default class Modal extends Component {
     onClick: propTypes.func.isRequired,
   };
 
-  closeModalEvent = e => {
-    if (e.key === 'Escape') this.props.onClick();
-  };
-
   componentDidMount() {
     window.addEventListener('keydown', this.closeModalEvent);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.closeModalEvent);
+  }
+
+  closeModalEvent = e => {
+    if (e.key === 'Escape') this.props.onClick();
+  };
 
   render() {
     const { link, onClick } = this.props;
@@ -26,9 +30,5 @@ export default class Modal extends Component {
         </div>
       </div>
     );
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.closeModalEvent);
   }
 }

@@ -4,6 +4,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
+import Notification from './Notification/Notification';
 import * as imagesAPI from '../services/image-api';
 import styles from './App.module.css';
 
@@ -23,12 +24,25 @@ export default class App extends Component {
     query: '',
     page: 1,
     isLoading: false,
+    error: null,
     modalUrl: null,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.images.length <= 12) return;
+    this.scrollTo();
+  }
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  scrollTo = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
   };
 
   fetchImages = (query, page) => {
@@ -39,13 +53,7 @@ export default class App extends Component {
       .then(({ data }) => {
         this.setState({ images: mapper(data.hits) });
       })
-      .then(() =>
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
-        }),
-      )
-      .catch(console.log)
+      .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
   };
 
@@ -61,7 +69,7 @@ export default class App extends Component {
 
     this.setState(
       () => ({ page: nextPage }),
-      this.fetchImages(this.state.query, nextPage),
+      () => this.fetchImages(this.state.query, nextPage),
     );
   };
 
@@ -77,8 +85,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { images, query, modalUrl, isLoading } = this.state;
-
+    const { images, query, modalUrl, error, isLoading } = this.state;
     return (
       <Fragment>
         <Searchbar
@@ -98,6 +105,8 @@ export default class App extends Component {
         )}
 
         {modalUrl && <Modal link={modalUrl} onClick={this.handleCloseModal} />}
+
+        {error && <Notification message={error.message} />}
       </Fragment>
     );
   }
