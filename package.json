@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@zendeskgarden/react-loaders": "^8.8.0",
     "@zendeskgarden/react-theming": "^8.8.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "gh-pages": "^2.2.0",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
